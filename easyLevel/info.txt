@@ -1,1 +1,1 @@
-learning C# by lixin
+note by learning C# by lixin from leedcode
