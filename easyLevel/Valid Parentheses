@@ -1,0 +1,57 @@
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+Example 1:
+
+Input: "()"
+Output: true
+Example 2:
+
+Input: "()[]{}"
+Output: true
+Example 3:
+
+Input: "(]"
+Output: false
+Example 4:
+
+Input: "([)]"
+Output: false
+Example 5:
+
+Input: "{[]}"
+Output: true
+
+/* 
+空の場合、true
+長さは奇数の場合、false
+　　　偶数の場合、()[]{}pairとして、順にチェックして、要素をremoveし、長さを縮める
+*/
+public class Solution {
+    public bool IsValid(string s) {
+        if(String.IsNullOrEmpty(s)) return true;
+        if(s.Length % 2 != 0) return false;
+        int strLength = s.Length;
+        while(strLength >= 0){
+            if(s.Contains("()")){
+                s = s.Remove(s.IndexOf("()"), 2);
+                strLength-=2;
+            }else if(s.Contains("[]")){
+                s = s.Remove(s.IndexOf("[]"), 2);
+                strLength-=2;
+            }else if(s.Contains("{}")){
+                s = s.Remove(s.IndexOf("{}"), 2);
+                strLength-=2;
+            }else{
+                break;
+            }
+        }
+        if(strLength != 0) return false;
+        return true;
+    }
+}
