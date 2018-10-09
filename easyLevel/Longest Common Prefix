@@ -25,7 +25,7 @@ public class Solution {
         
         string firstStr = strs[0];
         int maxIdx = firstStr.Length - 1;
-        int cnt = 0;
+        int cnt = 0;//一個目の項目以外の要素が全てかどうか
         
         while(maxIdx>=0){
             for(int i=1; i<strs.Length; i++){
@@ -33,6 +33,7 @@ public class Solution {
                     cnt++;        
                 }
             }
+            //全てStartsWithがOKなら,return;ないなら,cntを0にする
             if(cnt == strs.Length-1){
                 return firstStr.Substring(0, maxIdx+1);
             }else{
