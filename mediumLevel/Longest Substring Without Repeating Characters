@@ -1,0 +1,63 @@
+Given a string, find the length of the longest substring without repeating characters.
+
+Example 1:
+
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+Example 2:
+
+Input: "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+/*
+自分が書いたcode 
+performenceちょっと遅い
+*/             
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        
+        if(String.IsNullOrEmpty(s)) return 0;
+        
+        int idx = 0;
+        string noDupliStr = "";
+        int startPos = 0;
+        int length = 1;
+        
+        while(idx < s.Length-1){
+            string eachPart = s.Substring(idx, 1);
+            //次の文字と違うなら
+            if(eachPart != s.Substring(idx+1, 1)){
+                //サブ文字列にないなら
+                if(!noDupliStr.Contains(s.Substring(idx+1, 1))){
+                    noDupliStr = s.Substring(startPos, idx+1-startPos+1);
+                }//サブ文字列にあるなら
+                else{
+                   int findedPos = noDupliStr.IndexOf(s.Substring(idx+1, 1));
+                    noDupliStr = noDupliStr.Substring(findedPos+1) + s.Substring(idx+1, 1);
+                    //string oldStr = s.Substring(startPos,idx-startPos+1);
+                    startPos = s.IndexOf(s.Substring(idx+1, 1), startPos)+1;
+                }
+            }//次の文字と同じの場合
+            else{
+               if(!noDupliStr.Contains(s.Substring(idx+1, 1))){
+                    noDupliStr = noDupliStr + s.Substring(idx+1, 1);
+                    startPos = idx + 1;
+               }else{
+                    int findedPos = noDupliStr.IndexOf(s.Substring(idx+1, 1));
+                    noDupliStr = noDupliStr.Substring(findedPos+1) + s.Substring(idx+1, 1);
+                    startPos = s.IndexOf(s.Substring(idx+1, 1), startPos)+1;
+               }
+            }
+            length = Math.Max(length, noDupliStr.Length);
+            idx++;
+        }
+        return length;
+    }
+}
