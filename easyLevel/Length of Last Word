@@ -1,0 +1,42 @@
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+Example:
+
+Input: "Hello World"
+Output: 5
+
+
+public class Solution {
+    public int LengthOfLastWord(string s) {
+        /* method one bymyself
+        int lastWordLen = 0;
+        string result = "";
+        for(int i=s.Length-1; i>=0; --i){
+            if(s.Substring(i, 1) == " "){
+                if(result == ""){
+                    continue;
+                }else{
+                    break;
+                }
+            }else{
+                lastWordLen++;
+                result += s.Substring(i, 1);    
+            }
+        }
+        return lastWordLen;*/
+        //method two bymyself
+        string[] arr = s.Split(' ');
+        int lastWordLen = 0;
+        for(int i=arr.Length-1; i>=0; i--){
+            if(arr[i].Length != 0){
+                lastWordLen = arr[i].Length;
+                break;
+            }
+        }
+        return lastWordLen;
+    }
+}
