@@ -44,6 +44,25 @@ for (int i = 0; i < len; i++) {
 
 public class Solution {
     public int RemoveElement(int[] nums, int val) {
+        
+        //the best method
+        int i = 0;
+        int n = nums.Length;
+        while (i < n) {
+            /*下面代码可以看出如果数组内部的值和val相等的话，就让最后一个顶替他，此时i不自增，并拿n来记录长度 
+            顶替它之后，再次判断顶替后的是否和val相等，相等的话，就让倒数第二个来顶替在判断。。。
+            如果发现和val不相等，那么什么都不做，继续下个值得检查,这样的话就达到了num前面的都是不等于val的值，
+            一相等，就从总长度减1的n就是最终返回的长度*/
+            if (nums[i] == val) {
+                nums[i] = nums[n - 1];
+                // reduce array size by one
+                n--;
+            } else {
+                i++;
+            }
+        }
+        return n;
+        
         /*
          int numVals = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -55,7 +74,7 @@ public class Solution {
         }
         return nums.length - numVals;*/
         
-        
+        /*
         int i = 0;
         for (int j = 0; j < nums.Length; j++) {
             if (nums[j] != val) {
@@ -63,7 +82,7 @@ public class Solution {
                 i++;
             }
         }
-        return i;
+        return i;*/
     }
 }
 
