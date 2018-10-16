@@ -13,10 +13,68 @@ return [0, 1].
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
      
+        /*
         for(int i=0; i<nums.Length; i++){
             int otherIndex = Array.IndexOf(nums,target-nums[i]);
             if(otherIndex > -1 && otherIndex != i) return new int[] {i, otherIndex};
         }
-        return new int[] {-1, -1};
+        return new int[] {-1, -1};*/
+        /*
+        我们只想用线性的时间复杂度来解决问题，那么就是说只能遍历一个数字，那么另一个数字呢，我们可以事先将其存储起来，
+        使用一个Hashtable，来建立数字和其坐标位置之间的映射，我们都知道Hashtable是常数级的查找效率，
+        这样，我们在遍历数组的时候，用target减去遍历到的数字，就是另一个需要的数字了，
+        直接在Hashtable中查找其是否存在即可，注意要判断查找到的数字不是第一个数字，
+        比如target是4，遍历到了一个2，那么另外一个2不能是之前那个2，
+        整个实现步骤为：先遍历一遍数组，建立Hashtable映射，然后再遍历一遍，开始查找，找到则记录index。
+        
+        注意：hashtable是不能重复添加键的，重复添加是没有意义的。正常要先判断是否存在在添加，所以对于该题hashtable是不可以的。
+        
+        关于哈希表的作用，它是一种数据结构，和数组一样。
+        但是查找的时候，就方便很多，数组查找需要遍历，而哈希表是一对一的映射，所以直接找键对应值是否正确，一次即可找到。
+        这样就降低了时间复杂度。
+        
+        那么hashtable用不了，为了降低复杂度，接着试试泛型类dictionary<TKey, TValue>
+        同理dictionary的key也不能重复，出现了和hashtable一样的异常，白话理解，key是钥匙怎么可以重复呢？
+        
+        所以综上无论是hashtable还是dictionary 它们的key都不能重复，那么在加进表的时候，直接做个判断把唯一的键值对存进去即可。
+        还有注意：hashtable的键值对是object类型的，所以用的时候需要强制转换
+                 而dictionary里的键值对是可以自定义类型的
+        
+        
+        链接:https://www.cnblogs.com/grandyang/p/4130379.html
+        */
+        
+        int[] result = new int[2];
+        
+        Dictionary<int, int> mydic = new Dictionary<int, int>();
+        
+        for(int i=0; i<nums.Length; i++){
+            if(!mydic.ContainsKey(nums[i])) mydic.Add(nums[i], i);
+        }
+        for(int i=0; i<nums.Length; i++){
+            int otherNum = target - nums[i];
+            if(mydic.ContainsKey(otherNum) && mydic[otherNum] != i){
+                result[0] = i;
+                result[1] = mydic[otherNum];
+                break;
+            }
+        }
+        return result;
+        /*
+        同理，我们再精进一步 让代码简洁一些 效率稍微慢了一点
+        */
+        /*
+         Dictionary<int, int> mydic = new Dictionary<int, int>();
+        int[] result = new int[2];
+        
+        for(int i=0; i<nums.Length; i++){
+            if(mydic.ContainsKey(target - nums[i]) && mydic[target - nums[i]] != i){
+                result[0] = i;
+                result[1] = mydic[target - nums[i]];
+                break;
+            }
+            if(!mydic.ContainsKey(nums[i])) mydic.Add(nums[i], i);
+        }
+        return result;*/
     }
 }
