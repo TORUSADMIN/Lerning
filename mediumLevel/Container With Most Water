@@ -19,6 +19,7 @@ method one : 所有的长方形罗列出来，找出面积最大的
 method two : 分左右两个指针，不断调整移动，这种在数组或者字符串内部求最大小，求最长短的经常分开左右两个指针来操作
                 cf mediumLevel Longest Palindromic Substring
             这回左右指针从最左和最右不断向中间靠近 复杂度O(n)
+            具体看图
 */
 
 public class Solution {
@@ -30,7 +31,9 @@ public class Solution {
         int rightIdx = height.Length-1;
         /*
         看到while循环两个边界都在不断变化
-        右边界高左指针移动 因为右边比左边的高，要保留(最终取的矩形高一定小于等于这个高的)，左边移动，
+        右边界高左指针移动 因为右边比左边的高，要保留(最终取的矩形高一定小于等于这个高的)，左边移动
+                         因为高度取小的，所以当出现新的高度时，要定住它，另一边的指针移动
+                                                            如果不定住它，接着移动会漏掉可能大的面积
         左边界高右指针移动
         */
         while(leftIdx < rightIdx){
