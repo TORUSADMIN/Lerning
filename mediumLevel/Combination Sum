@@ -25,7 +25,15 @@ A solution set is:
   [2,3,3],
   [3,5]
 ]
-
+/*
+ex: [2,3,6,7]  7
+eachRow      target
+[2]           5
+[2,2]         3
+[2,2,2]       1
+[2,2]
+[2,2,3]
+ */
 
 public class Solution {  
     public IList<IList<int>> CombinationSum(int[] candidates, int target){
