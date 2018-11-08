@@ -1,0 +1,47 @@
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+Example:
+
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+public class Solution {
+/*排列组合的算法
+         * 从n个数中抽出k个数 的所有组合
+         */
+   public List<List<int>> Combine(int n, int k)
+        {
+            List<List<int>> result = new List<List<int>>();
+
+            Helper(result, new List<int>(), 1, n, k);
+
+            return result;
+        }
+
+        public void Helper(List<List<int>> result, List<int> eachRow, int start, int n, int k)
+        {
+        //递归终止条件是k个数成为0的时候。当然往小容器里加了一回后，k会逐渐递减
+            if (k == 0)
+            {
+                result.Add(new List<int>(eachRow));//当k为0的时候，说明小容器已加满即已经抽出了k个数。所以要加进最后的大容器
+                return;
+            }
+            for (int i = start; i <= n; i++)
+            {
+                eachRow.Add(i);//进来一个加一个，加进小容器
+                /*调用自身 在该数加进小容器之后，开始要加下一个数，能加的数就-1
+                 * 起始点成了下一个数i+1 加了一个后还剩k-1个可以加*/
+                Helper(result, eachRow, i + 1, n, k - 1);
+                eachRow.RemoveAt(eachRow.Count - 1);//从小容器中删除最后一项
+            }
+        }
+    
+}
