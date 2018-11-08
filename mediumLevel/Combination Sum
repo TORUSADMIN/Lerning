@@ -1,0 +1,60 @@
+/*这道题和Combination相当相似`*/
+
+Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+The same repeated number may be chosen from candidates unlimited number of times.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+Example 2:
+
+Input: candidates = [2,3,5], target = 8,
+A solution set is:
+[
+  [2,2,2,2],
+  [2,3,3],
+  [3,5]
+]
+
+
+public class Solution {  
+    public IList<IList<int>> CombinationSum(int[] candidates, int target){
+        if(candidates == null || candidates.Length == 0) return null; 
+        candidates = candidates.OrderBy(x => x).ToArray();//排序
+        IList<IList<int>> result = new List<IList<int>>();//从List到IList向上转型
+        //参数：大容器，小容器，数组，开始位置，目标数
+        CombinationSum(result, new List<int>(), candidates, 0, target);
+        return result;
+    }
+    
+    /*递归函数*/
+    public void CombinationSum(IList<IList<int>> result, 
+                                List<int> combination, 
+                                int[] candidates, 
+                                int startIndex, 
+                                int target){
+        /*减到目标数为0的时候正好，那么加到大容器
+        */
+        if(target == 0) result.Add(new List<int>(combination));
+        /*
+        注意看循环条件，虽然一直重复减，但是当减的这个要素已经大于目标数的情况，就不进行下去了
+        且要删掉最后一个已经加到小容器的要素
+        */
+        for(int i = startIndex ; i < candidates.Length && candidates[i] <= target ; i++){
+            /*装一个减一个 因为可以重复所以起始位置为同样的位置*/
+            combination.Add(candidates[i]);
+            CombinationSum(result, combination, candidates, i, target - candidates[i]);
+            combination.RemoveAt(combination.Count - 1);
+        }
+    }
+}
