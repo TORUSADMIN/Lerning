@@ -33,6 +33,12 @@ public class Solution {
                        int k,
                        int target){
         if(target == 0 && eachRow.Count == k){
+        //这里要注意，大容器里面装小容器，eachRow小容器满足条件的时候，新建小容器把eachRow的内容copy一下之后，再装进大容器
+        //否则如果result.Add(eachRow)的话 最后会返回[[,]]
+        //原因为什么新建个小容器把eachRow copy下之后再装进大容器，那是因为eachRow是临时，你装完判断符合条件的话就
+        //装大容器，返回，之后接着把eachRow的要素删除，即RemoveAt，eachRow在内存中是个地址值，result不断装的也是eachRow的
+        //地址值，最后eachRow的每个要素都会删除清空的，所以result最后返回的是个空空的大容器。
+        //综上所述，所以是要把eachRow的地址值copy一下再装进大容器，这样才能把每个小容器确确实实装在大容器里面。
             result.Add(new List<int>(eachRow));
             return; 
         }
