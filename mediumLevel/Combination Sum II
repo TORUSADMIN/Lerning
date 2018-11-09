@@ -1,0 +1,78 @@
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+Example 2:
+
+Input: candidates = [2,5,2,1,2], target = 5,
+A solution set is:
+[
+  [1,2,2],
+  [5]
+]
+
+
+public class Solution {
+    
+    /*
+    根据之前的经验，这货同样也是需要用到递归函数。
+    伪代码：
+    1，大容器，小容器初始化。IList的问题所以初始化的时候需要向上转型。备选数组进行排序。
+    2，递归函数定义
+            target=0时，将小容器加进大容器中。
+            从index=0位置开始进行 直到index大于数组长度或者要素大于目标数为止
+                要素加进小容器内；
+                target-数组的要素 index自增
+                调用递归函数
+                从小容器中删除最后一项
+    3，返回Ilist
+    
+    删除的原因：
+    每次调用递归函数时，首先就是判断target是否为0，满足的话加进大容器，不满足的话，才接着走
+    所以，既然调用了递归函数就说明在for循环里面，即符合循环条件数组中的要素并且要素值小于target
+    所以加完之后不论它满不满足target，小容器都该把加的要素删除掉，即一层一层删掉，
+    之后以便于让自己去装其它组合情况。
+    
+    排序的原因：
+    target逐渐减少，要素值逐渐增加，就不用进for循环
+    */
+    
+    public IList<IList<int>> CombinationSum2(int[] candidates, int target) {
+        candidates = candidates.OrderBy(x => x).ToArray();
+        IList<IList<int>> result = new List<IList<int>>();
+        List<int> eachRow = new List<int>();
+        Helper(result, eachRow, 0, candidates, target);
+        return result;
+    }
+    
+    public void Helper(IList<IList<int>> result, 
+                  List<int> eachRow, 
+                  int startIndex, 
+                  int[] candidates, 
+                  int target){
+        
+        if(target == 0) result.Add(new List<int>(eachRow));
+        
+        for(int i=startIndex; i<candidates.Length && candidates[i] <= target; i++){
+        //这句是为了防止重复
+            if (i > startIndex && candidates[i] == candidates[i - 1]) continue;
+            eachRow.Add(candidates[i]);
+            Helper(result, eachRow, i+1, candidates, target - candidates[i]);
+            eachRow.RemoveAt(eachRow.Count - 1);
+        }
+    }
+}
