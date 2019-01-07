@@ -22,6 +22,10 @@ Explanation: 342 + 465 = 807.
 就是要处理下进位问题。
 还有就是最高位的进位问题要最后特殊处理一下。
 进位的时候逢十向后进一位，而不是向前进一位
+
+————————————————————————————————————————————————————————
+关于对象赋值
+参照https://blog.csdn.net/yz930618/article/details/76278997/
 */
 public class Solution {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
