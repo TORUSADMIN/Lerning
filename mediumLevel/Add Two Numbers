@@ -34,9 +34,11 @@ public class Solution {
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
+        /*最后的节点即最高位如果超过10的情况，再往前进一位*/
         if (carry > 0) {
             curr.next = new ListNode(carry);
         }
+        //dummyHead头节点是0，所以返回0之后的所有节点
         return dummyHead.next;
     }
 }
