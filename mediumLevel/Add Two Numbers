@@ -17,11 +17,15 @@ Explanation: 342 + 465 = 807.
  * }
  */
 /*
-两个单向链表从头向后撸，一个一个相加，进位的时候逢十向后进一位，而不是向前进一位
+就是建立一个新链表，然后把输入的两个链表从头往后撸，
+每两个相加，添加一个新节点到新链表后面，
+就是要处理下进位问题。
+还有就是最高位的进位问题要最后特殊处理一下。
+进位的时候逢十向后进一位，而不是向前进一位
 */
 public class Solution {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(0);
+        ListNode dummyHead = new ListNode(0);//dummy头部节点无视
         ListNode p = l1, q = l2, curr = dummyHead;
         int carry = 0;
         while (p != null || q != null) {
@@ -30,7 +34,7 @@ public class Solution {
             int sum = carry + x + y;
             carry = sum / 10;
             curr.next = new ListNode(sum % 10);
-            curr = curr.next;
+            curr = curr.next;//添加一个新节点到新链表后面
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
