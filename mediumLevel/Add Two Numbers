@@ -39,6 +39,15 @@ public class Solution {
             carry = sum / 10;
             curr.next = new ListNode(sum % 10);//这里创建新的节点赋值给curr，因为是一样的引用，所以dummyHead的next也加上了同样的新节点
             curr = curr.next;//新节点(object，即新引用)赋值给了curr，此时curr和dummyHead的引用已经不同，curr此时有了新的值和新的空节点next
+            /*
+            也就是栈中curr的引用不断的变化，只有最开始curr的引用是和dummyhead相同，
+            但为什么最后返回dummyhead，没有问题呢
+            是因为单向链表结构的特点，单向链表是由多个节点构成，每个节点是一个值和下个节点的引用。
+            所以虽然curr指针引用变化，但是curr在变化前，留给了上一个节点的引用即next指向。
+            所以最后的结果不会影响dummyhead的输出。
+            具体查看图像。
+            
+            */
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
