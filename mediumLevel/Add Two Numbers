@@ -37,8 +37,8 @@ public class Solution {
             int y = (q != null) ? q.val : 0;
             int sum = carry + x + y;
             carry = sum / 10;
-            curr.next = new ListNode(sum % 10);
-            curr = curr.next;//添加一个新节点到新链表后面
+            curr.next = new ListNode(sum % 10);//这里创建新的节点赋值给curr，因为是一样的引用，所以dummyHead的next也加上了同样的新节点
+            curr = curr.next;//新节点(object，即新引用)赋值给了curr，此时curr和dummyHead的引用已经不同，curr此时有了新的值和新的空节点next
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
