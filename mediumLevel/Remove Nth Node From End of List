@@ -38,7 +38,8 @@ public class Solution {
                 continue;
             }else{ 
                 //curr.next = head;这里注意要用下面一行，通过当前值来建节点对象，放入curr的next里
-                /*而不是curr.next = head*/
+                /*而不是curr.next = head 两者区别是一个是单纯的值建立节点对象，next是没有值的，
+                而另一个直接把head赋值到curr的next，这样就已经有了next的，变得不单纯了。结果必然报错。*/
                 curr.next = new ListNode(head.val);
                 curr = curr.next;
                 head = head.next;
