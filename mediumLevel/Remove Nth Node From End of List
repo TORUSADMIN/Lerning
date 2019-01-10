@@ -1,0 +1,59 @@
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+
+Given n will always be valid.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+
+/*
+和之前的Add Two Numbers类似，一个指针用引用型变量curr
+和接收结果的变量dummyHead
+通过判断该位置是否为指定参数n的删除位置
+来让curr.next不断变化来接收该接收的节点
+*/
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        
+        ListNode dummyHead = new ListNode(-1);
+        ListNode curr = dummyHead;
+        int pos = 0;
+        int deletePos = GetLinkedListLength(head) - n;
+        while(head != null){
+            if(pos == deletePos){
+                head = head.next;
+                pos++;
+                continue;
+            }else{ 
+                //curr.next = head;这里注意要用下面一行，通过当前值来建节点对象，放入curr的next里
+                /*而不是curr.next = head*/
+                curr.next = new ListNode(head.val);
+                curr = curr.next;
+                head = head.next;
+                pos++;
+            }
+        }
+        return dummyHead.next;
+    }
+    //返回链表长度
+    public int GetLinkedListLength(ListNode head){
+        int length = 0;
+        while(head != null){
+            length++;
+            head = head.next;
+        }
+        return length;
+    }
+}
